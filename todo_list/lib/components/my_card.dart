@@ -13,8 +13,6 @@ class MyCard extends StatefulWidget {
 }
 
 class _MyCardState extends State<MyCard> {
-  bool _isDone = false;
-
   void runScheduleNotification() {
     LocalNotifications().showScheduleNotification(
         id: widget.task.id,
@@ -101,10 +99,10 @@ class _MyCardState extends State<MyCard> {
           IconButton(
             onPressed: () {
               setState(() {
-                _isDone = !_isDone;
+                widget.task.setIsDone = !widget.task.isDone;
               });
 
-              if (_isDone) {
+              if (widget.task.isDone) {
                 // cancel the schedule notification
                 cancelScheduleNotification();
               } else {
@@ -112,7 +110,7 @@ class _MyCardState extends State<MyCard> {
                 runScheduleNotification();
               }
             },
-            icon: _isDone
+            icon: widget.task.isDone
                 ? const Icon(
                     Icons.circle_rounded,
                     color: myDarkGreen,
@@ -121,7 +119,7 @@ class _MyCardState extends State<MyCard> {
                     Icons.circle_outlined,
                     color: myBlack,
                   ),
-            tooltip: _isDone ? 'Not done' : 'Done',
+            tooltip: widget.task.isDone ? 'Done' : 'Not done',
           ),
         ],
       ),
